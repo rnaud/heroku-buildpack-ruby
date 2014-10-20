@@ -17,8 +17,8 @@ module LanguagePack
       run!(curl)
     end
 
-    def fetch_untar(path, files_to_extract = nil)
-      curl = curl_command("#{@host_url.join(path)} -s -o")
+    def fetch_untar(path, files_to_extract = nil, insecure = false)
+      curl = curl_command("#{@host_url.join(path)} -s #{insecure ? '-k' : ''} -o")
       run!("#{curl} - | tar zxf - #{files_to_extract}")
     end
 

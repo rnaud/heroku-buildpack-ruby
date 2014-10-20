@@ -5,7 +5,7 @@ class LanguagePack::NodeInstaller
   LEGACY_NODE_VERSION = "0.4.7"
   LEGACY_BINARY_PATH = "node-#{LEGACY_NODE_VERSION}"
 
-  NODEJS_BASE_URL     = "http://nodejs.org/dist/v#{MODERN_NODE_VERSION}/"
+  NODEJS_BASE_URL     = "https://nodejs.org/dist/v#{MODERN_NODE_VERSION}/"
 
   def initialize(stack)
     @fetchers = {
@@ -36,7 +36,7 @@ class LanguagePack::NodeInstaller
       @fetchers[:legacy].fetch_untar("#{LEGACY_BINARY_PATH}.tgz")
     else
       node_bin = "#{MODERN_BINARY_PATH}/bin/node"
-      @fetchers[:modern].fetch_untar("#{MODERN_BINARY_PATH}.tar.gz", "#{MODERN_BINARY_PATH}/bin/node")
+      @fetchers[:modern].fetch_untar("#{MODERN_BINARY_PATH}.tar.gz", "#{MODERN_BINARY_PATH}/bin/node", true)
       FileUtils.mv(node_bin, ".")
       FileUtils.rm_rf(MODERN_BINARY_PATH)
     end
