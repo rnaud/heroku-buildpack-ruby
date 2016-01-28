@@ -14,7 +14,7 @@ class LanguagePack::Ruby < LanguagePack::Base
   NAME                 = "ruby"
   LIBYAML_VERSION      = "0.1.6"
   LIBYAML_PATH         = "libyaml-#{LIBYAML_VERSION}"
-  BUNDLER_VERSION      = "1.9.7"
+  BUNDLER_VERSION      = "1.9.1"
   BUNDLER_GEM_PATH     = "bundler-#{BUNDLER_VERSION}"
   DEFAULT_RUBY_VERSION = "ruby-2.0.0"
   RBX_BASE_URL         = "http://binaries.rubini.us/heroku"
@@ -542,6 +542,7 @@ WARNING
       log("bundle") do
         bundle_without = env("BUNDLE_WITHOUT") || "development:test"
         bundle_bin     = "bundle"
+        #bundle_command = "#{bundle_bin} _#{BUNDLER_VERSION}_ install --without #{bundle_without} --path vendor/bundle --binstubs #{bundler_binstubs_path}"
         bundle_command = "#{bundle_bin} install --without #{bundle_without} --path vendor/bundle --binstubs #{bundler_binstubs_path}"
         bundle_command << " -j4"
 
