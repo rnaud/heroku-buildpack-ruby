@@ -82,7 +82,16 @@ WARNING
         @cache.load_without_overwrite public_assets_folder
         @cache.load default_assets_cache
 
-        precompile.invoke(env: rake_env)
+        3.times do |i|
+          precompile.invoke(env: rake_env)
+
+          break if precompile.success?
+
+          if i < 2
+            puts "Precompile FAILED, sleeping for 10s and retrying..."
+            sleep(10)
+          end
+        end
 
         if precompile.success?
           log "assets_precompile", :status => "success"
