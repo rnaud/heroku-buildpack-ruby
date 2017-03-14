@@ -84,6 +84,7 @@ WARNING
           precompile = rake.task("assets:precompile")
           return true unless precompile.is_defined?
           topic("Preparing app for Rails asset pipeline")
+        end
 
         @cache.load_without_overwrite public_assets_folder
         @cache.load default_assets_cache
