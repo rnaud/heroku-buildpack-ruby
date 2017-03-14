@@ -74,8 +74,14 @@ WARNING
           return true
         end
 
+        preload = rake.task("rails:preload")
         precompile = rake.task("assets:precompile")
-        return true unless precompile.is_defined?
+
+        if preload.is_defined? && precompile.is_defined?
+          precompile = rake.task("rails:preload assets:precompile")
+        else
+          precompile = rake.task("assets:precompile")
+          return true unless precompile.is_defined?
 
         topic("Preparing app for Rails asset pipeline")
 
