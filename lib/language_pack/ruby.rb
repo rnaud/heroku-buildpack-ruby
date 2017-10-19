@@ -101,6 +101,7 @@ WARNING
         post_bundler
         create_database_yml
         install_binaries
+        run_phrases_precompile_rake_task
         run_assets_precompile_rake_task
       end
       best_practice_warnings
@@ -827,6 +828,22 @@ params = CGI.parse(uri.query || "")
       msg << "https://devcenter.heroku.com/articles/pre-provision-database\n"
     end
     error msg
+  end
+
+  def run_phrases_precompile_rake_task
+    instrument 'ruby.run_phrases_precompile_rake_task' do
+      precompile = rake.task("locale:dump_phrases")
+      return true unless precompile.is_defined?
+
+      topic "Precompiling phrases JSON assets"
+      precompile.invoke(env: rake_env)
+
+       if precompile.success?
+         puts "Phrases precompilation completed (#{"%.2f" % precompile.time}s)"
+       else
+         precompile_fail(precompile.output)
+       end
+    end
   end
 
   def bundler_cache
